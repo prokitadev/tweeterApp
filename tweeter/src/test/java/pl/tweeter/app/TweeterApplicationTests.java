@@ -1,4 +1,4 @@
-package pl.tweeter.tweeter;
+package pl.tweeter.app;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

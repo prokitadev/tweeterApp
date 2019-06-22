@@ -1,4 +1,4 @@
-package pl.tweeter.tweeter;
+package pl.tweeter.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
