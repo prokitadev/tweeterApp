@@ -15,14 +15,14 @@ public class User {
     private Timestamp createTimestamp;
 
     private String login;
-
     private String password;
-
     private String role;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_descriptionId")
     private UserDescription userDescription;
+
+
 
     public Integer getId() {
         return id;
@@ -62,5 +62,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public UserDescription getUserDescription() {
+        return userDescription;
+    }
+
+    public void setUserDescription(UserDescription userDescription) {
+        this.userDescription = userDescription;
     }
 }

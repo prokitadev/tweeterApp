@@ -5,15 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.tweeter.app.controller.SpringMvcController;
-import pl.tweeter.app.entity.Action;
 import pl.tweeter.app.entity.User;
 import pl.tweeter.app.model.UserDto;
 import pl.tweeter.app.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,10 +38,16 @@ public class UserService {
     }
 
     public void banUser(UserDto userDto, Long days) {
-        User user = userRepository.
-                findUserByLogin(userDto.getLogin())
+        User user = userRepository
+                .findUserByLogin(userDto.getLogin())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        actionService.createAction(days, user, user);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userLogin = authentication.getName();
+        User admin = userRepository
+                .findUserByLogin(userLogin)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        actionService.createAction(days, user, admin);
     }
 }

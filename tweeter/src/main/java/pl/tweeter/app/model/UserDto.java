@@ -1,5 +1,7 @@
 package pl.tweeter.app.model;
 
+import pl.tweeter.app.entity.UserDescription;
+
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
@@ -16,12 +18,22 @@ public class UserDto {
     private Integer id;
     private Timestamp createTimestamp;
 
-    @Size(min=2, max=20, message = "password length should be between 2 and 20 chars")
+    @Size(min=2, max=20, message = "login length should be between 2 and 20 chars")
     private String login;
 
     @Size(min=2, max=20, message = "password length should be between 2 and 20 chars")
     private String password;
     private String role;
+    private UserDescription userDescription;
+
+    public UserDescription getUserDescription() {
+        return userDescription;
+    }
+
+    public void setUserDescription(UserDescription userDescription) {
+        this.userDescription = userDescription;
+    }
+
 
 
     public Integer getId() {
