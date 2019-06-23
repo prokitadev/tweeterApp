@@ -1,10 +1,7 @@
 package pl.tweeter.app.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -26,7 +23,9 @@ public class UserDescription {
 
     private LocalDate dateOfBirth;
 
-    private Integer userId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private User user;
 
     public Integer getId() {
         return id;
@@ -74,14 +73,6 @@ public class UserDescription {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 }
 

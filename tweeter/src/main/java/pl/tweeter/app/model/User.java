@@ -1,19 +1,17 @@
 package pl.tweeter.app.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "t_users")
 public class User {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(name = "create_timestamp")
     private LocalDateTime createTimestamp;
 
     private String login;
@@ -22,7 +20,9 @@ public class User {
 
     private String role;
 
-    private Integer userDescriptionId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_descriptionId")
+    private UserDescription userDescription;
 
     public Integer getId() {
         return id;
@@ -62,13 +62,5 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public Integer getUserDescriptionId() {
-        return userDescriptionId;
-    }
-
-    public void setUserDescriptionId(Integer userDescriptionId) {
-        this.userDescriptionId = userDescriptionId;
     }
 }
