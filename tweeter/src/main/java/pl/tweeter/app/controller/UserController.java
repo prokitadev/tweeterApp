@@ -29,11 +29,10 @@ public class UserController {
         return "users";
     }
 
-    @PostMapping("/banUser")
-    public String banUser(@ModelAttribute @Valid UserDto userDto, Long days) {
-        days = 30L; //później to zmienić i przekazywać z weba
+    @PostMapping("/banuser")
+    public String banUser(@ModelAttribute("login") @Valid UserDto userDto, Long days) {
         userService.banUser(userDto, days);
-        return "banUserResult";
+        return "banuserresult";
 
     }
 }

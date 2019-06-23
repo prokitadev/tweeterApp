@@ -11,16 +11,16 @@
     <thead>
     <tr>
         <th>User login</th>
-        <th>Bane period</th>
+        <th>Ban period</th>
         <th>Action</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <form action="/banUser" method="post" th:object="${user}">
+        <form action="/banuser" method="post" th:object="${user}">
             <td th:text="${user.login}"></td>
             <input type="hidden" name="login" th:value="${user.login}"/>
-            <td><input type="number" name="days" value="text"/></td>
+            <td><input type="range" name="days" min="1" max="30"/></td>
             <td><button value="Ban">Ban User</button></td>
         </form>
     </tr>

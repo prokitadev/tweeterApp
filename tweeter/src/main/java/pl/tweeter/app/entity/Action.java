@@ -1,29 +1,30 @@
 package pl.tweeter.app.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "t_actions")
 public class Action {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "create_timestamp")
     private Timestamp createTimestamp;
 
     private String type;
 
+    @Column(name = "expire_timestamp")
     private Timestamp expireTimestamp;
 
     private Integer userId;
 
     private Integer postId;
 
+    @Column(name = "admin_userId")
     private Integer adminUserId;
 
     public Integer getId() {
