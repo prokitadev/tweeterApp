@@ -9,11 +9,14 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Collection;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"pl.tweeter.app.repository"})
@@ -35,7 +38,7 @@ public class SpringConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("pl.tweeter.app.model");
+        entityManagerFactoryBean.setPackagesToScan("pl.tweeter.app.entity");
         return entityManagerFactoryBean;
     }
 
@@ -55,7 +58,5 @@ public class SpringConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
-
-
 
 }

@@ -1,11 +1,12 @@
-package pl.tweeter.app.model;
+package pl.tweeter.app.entity;
 
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
+@Table(name = "t_user_descriptions")
 public class UserDescription {
 
 
@@ -13,15 +14,18 @@ public class UserDescription {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private LocalDateTime createTimestamp;
+    @Column(name = "create_timestamp")
+    private Timestamp createTimestamp;
 
     private String name;
 
     private String surname;
 
+    @Column(name = "email_address")
     private String emailAddres;
 
-    private LocalDate dateOfBirth;
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
@@ -35,11 +39,11 @@ public class UserDescription {
         this.id = id;
     }
 
-    public LocalDateTime getCreateTimestamp() {
+    public Timestamp getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(LocalDateTime createTimestamp) {
+    public void setCreateTimestamp(Timestamp createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 
@@ -67,11 +71,11 @@ public class UserDescription {
         this.emailAddres = emailAddres;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

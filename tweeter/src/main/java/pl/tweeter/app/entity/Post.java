@@ -1,24 +1,28 @@
-package pl.tweeter.app.model;
+package pl.tweeter.app.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
+@Table(name = "t_posts")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private LocalDateTime createTimestamp;
-    private LocalDateTime modifyTimestamp;
-    private LocalDateTime deleteTimestamp;
+    @Column(name = "create_timestamp")
+    private Timestamp createTimestamp;
+
+    @Column(name = "modify_timestamp")
+    private Timestamp modifyTimestamp;
+
+    @Column(name = "delete_timestamp")
+    private Timestamp deleteTimestamp;
     private Integer userId;
     private String text;
+
+    @Column(name = "public")
     private boolean isPublic;
     private String type;
     private Integer parentId;
@@ -31,27 +35,27 @@ public class Post {
         this.id = id;
     }
 
-    public LocalDateTime getCreateTimestamp() {
+    public Timestamp getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(LocalDateTime createTimestamp) {
+    public void setCreateTimestamp(Timestamp createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 
-    public LocalDateTime getModifyTimestamp() {
+    public Timestamp getModifyTimestamp() {
         return modifyTimestamp;
     }
 
-    public void setModifyTimestamp(LocalDateTime modifyTimestamp) {
+    public void setModifyTimestamp(Timestamp modifyTimestamp) {
         this.modifyTimestamp = modifyTimestamp;
     }
 
-    public LocalDateTime getDeleteTimestamp() {
+    public Timestamp getDeleteTimestamp() {
         return deleteTimestamp;
     }
 
-    public void setDeleteTimestamp(LocalDateTime deleteTimestamp) {
+    public void setDeleteTimestamp(Timestamp deleteTimestamp) {
         this.deleteTimestamp = deleteTimestamp;
     }
 

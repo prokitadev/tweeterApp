@@ -2,10 +2,17 @@ package pl.tweeter.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.tweeter.app.model.User;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import pl.tweeter.app.entity.User;
+import pl.tweeter.app.model.UserDto;
 import pl.tweeter.app.service.UserService;
 
+import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -15,7 +22,18 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public String getAllUsers(Model model) {
+        List<User> userList = userService.getAllUsers();
+        userList.sort(Comparator.comparing(post -> post.getCreateTimestamp()));
+        model.addAttribute("users", userList);
+        return "users";
+    }
+
+    @PostMapping("/banUser")
+    public String banUser(@ModelAttribute @Valid UserDto userDto, Long days) {
+        days = 30L; //później to zmienić i przekazywać z weba
+        userService.banUser(userDto, days);
+        return "banUserResult";
+
     }
 }

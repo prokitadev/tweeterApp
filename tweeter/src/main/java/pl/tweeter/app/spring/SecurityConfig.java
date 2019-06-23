@@ -2,6 +2,7 @@ package pl.tweeter.app.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,7 +15,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/index")
+                .hasAnyAuthority("admin", "user", "moderator", "observer")
+                .antMatchers("/users")
+                .hasAnyAuthority("admin")
+                .anyRequest().permitAll()
+                .and().csrf().disable()
+                .headers().frameOptions().disable()
+                .and().formLogin()
+                .loginProcessingUrl("/login")
+                .usernameParameter("login")
+                .passwordParameter("password")
+                .loginProcessingUrl("/login-process")
+                .failureUrl("/login?error")
+                .defaultSuccessUrl("/index")
+                .and().logout().logoutSuccessUrl("/index");
+    }
 
-
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication()
+                .usersByUsernameQuery("SELECT u.login, u.password, 1 FROM t_users u where u.login=?")
+                .authoritiesByUsernameQuery("SELECT u.login, u.role, 1 FROM t_users u where u.login=?")
+                .dataSource(jdbcTemplate.getDataSource());
     }
 }

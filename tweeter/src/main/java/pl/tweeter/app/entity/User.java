@@ -1,7 +1,7 @@
-package pl.tweeter.app.model;
+package pl.tweeter.app.entity;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "t_users")
@@ -12,7 +12,7 @@ public class User {
     private Integer id;
 
     @Column(name = "create_timestamp")
-    private LocalDateTime createTimestamp;
+    private Timestamp createTimestamp;
 
     private String login;
 
@@ -32,11 +32,11 @@ public class User {
         this.id = id;
     }
 
-    public LocalDateTime getCreateTimestamp() {
+    public Timestamp getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(LocalDateTime createTimestamp) {
+    public void setCreateTimestamp(Timestamp createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 

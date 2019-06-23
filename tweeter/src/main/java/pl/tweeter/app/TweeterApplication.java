@@ -1,12 +1,7 @@
 package pl.tweeter.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pl.tweeter.app.controller.UserController;
-import pl.tweeter.app.model.User;
-import pl.tweeter.app.repository.UserRepository;
-import pl.tweeter.app.service.UserService;
 
 @SpringBootApplication
 public class TweeterApplication {

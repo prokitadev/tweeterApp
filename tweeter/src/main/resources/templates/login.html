@@ -1,0 +1,32 @@
+<!Doctype html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Tweeter</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous"/>
+</head>
+<body>
+<h1>To jest Twitter</h1>
+<p class="container">
+    <form class="sign" th:action="@{/login-process}" method="post">
+
+<p class="alert alert-danger" th:if="${param.error}" th:text="'Podany login lub hasło jest nieprawidłowy'"></p>
+
+<h3>
+    Zaloguj sie
+</h3>
+
+<label for="inputLogin">Login</label>
+<input type="text" id="inputLogin" placeholder="Podaj login"
+       th:required="required" name="login"/>
+
+<label for="inputPassword">Password</label>
+<input type="password" id="inputPassword" th:required="required" placeholder="Podaj hasło" name="password" />
+
+<button class="btn btn-dark" type="submit">Zaloguj się</button>
+
+</form>
+</p>
+</body>
+</html>

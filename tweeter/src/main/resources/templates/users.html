@@ -7,20 +7,24 @@
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous"/>
 </head>
 <body>
-<h1>To jest Twitter</h1>
 <table class="pure-table pure-table-bordered">
     <thead>
     <tr>
-        <th>POST</th>
-        <th>DATE</th>
+        <th>User login</th>
+        <th>Bane period</th>
+        <th>Action</th>
     </tr>
     </thead>
-<tbody>
-<tr th:each="post : ${posts}">
-        <td th:text="${post.text}"></td>
-        <td th:text="${post.createTimestamp}"></td>
-</tr>
-</tbody>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <form action="/banUser" method="post" th:object="${user}">
+            <td th:text="${user.login}"></td>
+            <input type="hidden" name="login" th:value="${user.login}"/>
+            <td><input type="number" name="days" value="text"/></td>
+            <td><button value="Ban">Ban User</button></td>
+        </form>
+    </tr>
+    </tbody>
 </table>
 </body>
 </html>

@@ -1,9 +1,10 @@
-package pl.tweeter.app.model;
+package pl.tweeter.app.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,11 +14,11 @@ public class Action {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private LocalDateTime createTimestamp;
+    private Timestamp createTimestamp;
 
     private String type;
 
-    private LocalDateTime expireTimestamp;
+    private Timestamp expireTimestamp;
 
     private Integer userId;
 
@@ -33,11 +34,11 @@ public class Action {
         this.id = id;
     }
 
-    public LocalDateTime getCreateTimestamp() {
+    public Timestamp getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(LocalDateTime createTimestamp) {
+    public void setCreateTimestamp(Timestamp createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 
@@ -49,11 +50,11 @@ public class Action {
         this.type = type;
     }
 
-    public LocalDateTime getExpireTimestamp() {
+    public Timestamp getExpireTimestamp() {
         return expireTimestamp;
     }
 
-    public void setExpireTimestamp(LocalDateTime expireTimestamp) {
+    public void setExpireTimestamp(Timestamp expireTimestamp) {
         this.expireTimestamp = expireTimestamp;
     }
 
