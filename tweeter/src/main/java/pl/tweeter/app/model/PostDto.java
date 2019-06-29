@@ -15,6 +15,7 @@ public class PostDto {
     private Integer parentId;
 
     public PostDto(Integer id) {
+
         this.id = id;
     }
 
