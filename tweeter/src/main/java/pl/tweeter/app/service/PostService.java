@@ -44,6 +44,14 @@ public class PostService {
         Post post = modelMapper.map(postDto, Post.class);
         postRepository.save(post);
     }
+    public void addComment(PostDto postDto) {
+        postDto.setCreateTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        postDto.setUserId(3L);
+        postDto.setPublic(true);
+        postDto.setType("comment");
+        Post post = modelMapper.map(postDto, Post.class);
+        postRepository.save(post);
+    }
 
     public List<PostDto> getAllPosts() {
         List<Post> posts = postRepository.findAll();

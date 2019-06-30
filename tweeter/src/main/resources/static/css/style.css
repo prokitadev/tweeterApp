@@ -1,5 +1,5 @@
 .main {
-    max-width: 700px;
+    max-width: 900px;
     margin: auto;
 }
 
@@ -16,9 +16,38 @@
 }
 
 .comment {
-    font-family: sans-serif, "Montserrat";
-    font-size: 14pt;
-    padding-top: 12pt;
-    padding-left: 12pt;
-    background-color: aliceblue;
+    height: calc(0.8em + .75rem + 2px);
+    padding: .2rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.3;
+    color: #495057;
+    background-color: #e9ecef;
+    background-clip: padding-box;
+    border-radius: .25rem;
+}
+.form-comment {
+    display: block;
+    width: 100%;
+    height: calc(0.8em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: .9rem;
+    font-weight: 300;
+    line-height: 1.3;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.comment-d {
+    width: 70%;
+}
+.table-comments {
+    max-width: 700px;
+    width: 70%;
+    align-items: initial;
+
 }

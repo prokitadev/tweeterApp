@@ -25,6 +25,7 @@ public class IndexController {
         model.addAttribute("postToInsert", new PostDto());
         model.addAttribute("postToModify", new PostDto());
         model.addAttribute("postToDelete", new PostDto());
+        model.addAttribute("commentToInsert", new PostDto());
 
         return "index";
     }

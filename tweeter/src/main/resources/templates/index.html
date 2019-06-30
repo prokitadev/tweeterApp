@@ -19,7 +19,7 @@
 
             <form th:action="@{/addpost}" method="post" th:object="${postToInsert}">
                 <p> Add new post:
-                    <input class="form-control" id="exampleFormControlTextarea1" type="text" th:field="*{text}"/>
+                    <input class="form-control" type="text" th:field="*{text}"/>
                 </p>
                 <p>
                     <input type="submit" value="Submit"/>
@@ -34,31 +34,48 @@
 
     <!-- POST LIST -->
 
+
     <div th:each="post : ${posts}" th:if="${post.parentId == null}">
         <div class="post" th:text="${post.text}"></div>
         <div class="date" th:text="${post.createTimestamp}"></div>
+        <table class="table-comments">
+<!--        ADD COMMENT -->
+        <form th:action="@{/addcomment}" method="post" th:object="${commentToInsert}">
+            <tr>  <p>
+                <td class="comment-d"><input class="form-comment" type="text" th:field="*{text}"/></td>
+            </p>
+            <p>
+                <td><input type="submit" value="Comment" class="btn btn-success btn-sm"/>
+                <input type="hidden" name="parentId" th:value="${post.id}"/></td>
+
+            </p></tr>
+        </form>
+<!--        end of ADD COMMENT-->
 
         <div th:each="comment : ${posts}" th:if="${post.id == comment.parentId}">
-
+        <tr>
             <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
-                <div id="messageId" class="comment" th:classid="${comment.id}" th:text="${comment.text}"></div>
-                <div><input id="editId" type="button" value="Edit" onclick="updateButton()"/>
-                    <input id="saveId" hidden="true" type="submit" value="Save" onclick="updateButton()"/>
+               <td class="comment-d"> <div id="messageId" class="comment" th:classid="${comment.id}" th:text="${comment.text}"></div></td>
+                <td> <div><input id="editId" type="button" value="Edit comment" class="btn btn-warning btn-sm" onclick="updateButton()"/>
+                    <input id="saveId" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" onclick="updateButton()"/>
                 </div>
                 <input id="newMessageId" type="hidden" name="text"/>
-                <input type="hidden" name="id" th:value="${comment.id}"/>
+                <input type="hidden" name="id" th:value="${comment.id}"/></td>
             </form>
 
             <form th:action="@{/deletepost}" method="post" th:object="${postToDelete}">
-                <input id="deleteId" type="submit" value="Delete"/>
-                <input type="hidden" name="id" th:value="${comment.id}"/>
+                <td><input id="deleteId" type="submit" value="Delete" class="btn btn-danger btn-sm"/>
+                <input type="hidden" name="id" th:value="${comment.id}"/></td>
             </form>
-
+        </tr>
         </div>
+        </table>
     </div>
-    <div>
-        <hr/>
-    </div>
+
+
+
+
+
 </div>
     <!-- end of POST LIST -->
 <script type="text/javascript">

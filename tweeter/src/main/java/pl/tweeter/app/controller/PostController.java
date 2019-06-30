@@ -57,6 +57,12 @@ public class PostController {
         return "modifypost";
     }
 
+    @PostMapping(value="/addcomment")
+    public String addComment(PostDto postDto) {
+        postService.addComment(postDto);
+        return "modifypost";
+    }
+
     @GetMapping("/modifypost")
     public String modifyPost(Model model) {
         model.addAttribute("postToModify", new PostDto());
