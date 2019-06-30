@@ -15,7 +15,7 @@ public class UserDto {
     public UserDto() {
     }
 
-    private Integer id;
+    private Long id;
     private Timestamp createTimestamp;
 
     @Size(min=2, max=20, message = "login length should be between 2 and 20 chars")
@@ -36,11 +36,11 @@ public class UserDto {
 
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

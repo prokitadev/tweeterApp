@@ -1,32 +1,35 @@
 package pl.tweeter.app.model;
 
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 public class PostDto {
 
-    private Integer id;
+    private Long id;
     private Timestamp createTimestamp;
     private Timestamp modifyTimestamp;
     private Timestamp deleteTimestamp;
-    private Integer userId;
+    private Long userId;
+
+    @Size(max = 299)
     private String text;
     private boolean isPublic;
     private String type;
-    private Integer parentId;
-
-    public PostDto(Integer id) {
-
-        this.id = id;
-    }
+    private Long parentId;
 
     public PostDto() {
+
     }
 
-    public Integer getId() {
+    public PostDto(String text) {
+        this.text = text;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,11 +57,11 @@ public class PostDto {
         this.deleteTimestamp = deleteTimestamp;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -86,11 +89,11 @@ public class PostDto {
         this.type = type;
     }
 
-    public Integer getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 }
