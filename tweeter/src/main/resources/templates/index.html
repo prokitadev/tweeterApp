@@ -11,10 +11,15 @@
 </head>
 <body>
 <div class="main">
+
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Tweeter</h1>
             <p class="lead">What you want to say?</p>
+
+<!--            <p th:text="${loggeduser.login}"></p>-->
+<!--TO powyzej nie działa, jest jakiś problem z Mapowanie tego w Index Controlerze? Nie przyhmuje też usera z UserService-->
+
             <!-- ADD NEW POST PART -->
 
             <form th:action="@{/addpost}" method="post" th:object="${postToInsert}">
@@ -31,7 +36,6 @@
         </div>
     </div>
 
-
     <!-- POST LIST -->
 
 
@@ -40,43 +44,54 @@
         <div class="date" th:text="${post.createTimestamp}"></div>
         <table class="table-comments">
 <!--        ADD COMMENT -->
-        <form th:action="@{/addcomment}" method="post" th:object="${commentToInsert}">
-            <tr>  <p>
-                <td class="comment-d"><input class="form-comment" type="text" th:field="*{text}"/></td>
-            </p>
-            <p>
-                <td><input type="submit" value="Comment" class="btn btn-success btn-sm"/>
-                <input type="hidden" name="parentId" th:value="${post.id}"/></td>
+            <form th:action="@{/addcomment}" method="post" th:object="${commentToInsert}">
+                <tr>
+                    <p>
+                        <td class="comment-d"><input class="form-comment" type="text" th:field="*{text}"/>
+                        </td>
+                    </p>
+                    <p>
+                        <td>
+                            <input type="submit" value="Comment" class="btn btn-success btn-sm"/>
+                            <input type="hidden" name="parentId" th:value="${post.id}"/>
+                        </td>
 
-            </p></tr>
-        </form>
+                    </p>
+                </tr>
+            </form>
 <!--        end of ADD COMMENT-->
-
         <div th:each="comment : ${posts}" th:if="${post.id == comment.parentId}">
-        <tr>
-            <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
-               <td class="comment-d"> <div id="messageId" class="comment" th:classid="${comment.id}" th:text="${comment.text}"></div></td>
-                <td> <div><input id="editId" type="button" value="Edit comment" class="btn btn-warning btn-sm" onclick="updateButton()"/>
-                    <input id="saveId" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" onclick="updateButton()"/>
-                </div>
-                <input id="newMessageId" type="hidden" name="text"/>
-                <input type="hidden" name="id" th:value="${comment.id}"/></td>
-            </form>
+            <tr>
+                <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
+                    <td class="comment-d">
+                        <div id="messageId" class="comment" th:classid="${comment.id}" th:text="${comment.text}"></div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="editId" type="button" value="Edit comment" class="btn btn-warning btn-sm" onclick="updateButton()"/>
+                            <input id="saveId" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" onclick="updateButton()"/>
+                        </div>
+                            <input id="newMessageId" type="hidden" name="text"/>
+                            <input type="hidden" name="id" th:value="${comment.id}"/>
+                    </td>
+                </form>
 
-            <form th:action="@{/deletepost}" method="post" th:object="${postToDelete}">
-                <td><input id="deleteId" type="submit" value="Delete" class="btn btn-danger btn-sm"/>
-                <input type="hidden" name="id" th:value="${comment.id}"/></td>
-            </form>
-        </tr>
+                <form th:action="@{/deletepost}" method="post" th:object="${postToDelete}">
+                    <td>
+                        <input id="deleteId" type="submit" value="Delete" class="btn btn-danger btn-sm"/>
+                        <input type="hidden" name="id" th:value="${comment.id}"/>
+                    </td>
+                </form>
+            </tr>
         </div>
         </table>
     </div>
-
-
-
-
-
 </div>
+
+
+
+
+
     <!-- end of POST LIST -->
 <script type="text/javascript">
 
