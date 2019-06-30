@@ -21,10 +21,11 @@ public class IndexController {
     @RequestMapping(value = {"/", "/index"})
     public String getPost(Model model) {
         List<PostDto> postList = postService.getAllPosts();
-        postList.sort(Comparator.comparing(post -> post.getCreateTimestamp()));
         model.addAttribute("posts", postList);
         model.addAttribute("postToInsert", new PostDto());
         model.addAttribute("postToModify", new PostDto());
+        model.addAttribute("postToDelete", new PostDto());
+
         return "index";
     }
 

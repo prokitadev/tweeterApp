@@ -9,8 +9,10 @@ import pl.tweeter.app.entity.User;
 import pl.tweeter.app.model.PostDto;
 import pl.tweeter.app.repository.PostRepository;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,34 +30,34 @@ public class PostService {
     }
 
     public void editPost(PostDto postDto) {
-
         Post postTemp = postRepository.getOne(postDto.getId());
         postTemp.setModifyTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         postTemp.setText(postDto.getText());
         postRepository.save(postTemp);
-
     }
 
     public void savePost(PostDto postDto) {
-
         postDto.setCreateTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         postDto.setUserId(3L);
         postDto.setPublic(true);
         postDto.setType("post");
         Post post = modelMapper.map(postDto, Post.class);
         postRepository.save(post);
-
     }
-
 
     public List<PostDto> getAllPosts() {
         List<Post> posts = postRepository.findAll();
-
         return posts
                 .stream()
                 .map(p -> modelMapper.map(p, PostDto.class))
+                .filter(p -> p.getDeleteTimestamp() == null)
+                .sorted(Comparator.comparing(PostDto::getCreateTimestamp).reversed())
                 .collect(Collectors.toList());
+
     }
 
-
+    public void deletePost(PostDto postDto) {
+        Post postTemp = postRepository.getOne(postDto.getId());
+        postTemp.setDeleteTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        postRepository.save(postTemp);    }
 }

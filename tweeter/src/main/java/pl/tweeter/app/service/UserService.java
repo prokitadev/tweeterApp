@@ -33,7 +33,9 @@ public class UserService {
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
 
-        return users.stream().map(u -> modelMapper.map(u, User.class))
+        return users
+                .stream()
+                .map(u -> modelMapper.map(u, User.class))
                 .collect(Collectors.toList());
     }
 

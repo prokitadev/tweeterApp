@@ -68,4 +68,10 @@ public class PostController {
         postService.editPost(postDto);
         return "modifypost";
     }
+
+    @PostMapping(value="/deletepost")
+    public String deletePost(PostDto postDto) {
+        postService.deletePost(postDto);
+        return "modifypost";
+    }
 }
