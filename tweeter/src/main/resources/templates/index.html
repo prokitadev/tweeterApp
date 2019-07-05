@@ -15,9 +15,10 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Tweeter</h1>
-            <p class="lead">What you want to say?</p>
+            <p class="lead"><span th:text="${getUserName.userDescription.name}"></span>, what you want to say?</p>
 
-<!--            <p th:text="${loggeduser.login}"></p>-->
+
+            <!--            <p th:text="${loggeduser.login}"></p>-->
 <!--TO powyzej nie działa, jest jakiś problem z Mapowanie tego w Index Controlerze? Nie przyhmuje też usera z UserService-->
 
             <!-- ADD NEW POST PART -->
@@ -33,15 +34,29 @@
             </form>
 
             <!-- end of ADD NEW POST PART -->
-        </div>
+            </div>
     </div>
 
     <!-- POST LIST -->
 
 
     <div th:each="post : ${posts}" th:if="${post.parentId == null}">
-        <div class="post" th:text="${post.text}"></div>
+
+
+        <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
+
+        <div th:id="'messagePId' + ${post.id}" th:class="'post' + ${post.id}" th:text="${post.text}"></div>
         <div class="date" th:text="${post.createTimestamp}"></div>
+            <div>
+                <input th:id="'editPId' + ${post.id}" type="button" value="Edit post" class="btn btn-warning btn-sm" th:onclick="'javascript:updateButtonPost(' + ${post.id} + ');'"/>
+                <input th:id="'savePId' + ${post.id}" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" th:onclick="'javascript:updateButtonPost(' + ${post.id} + ');'"/>
+            </div>
+            <input th:id="'newMessagePId' + ${post.id}" type="hidden" name="text"/>
+            <input type="hidden" name="id" th:value="${post.id}"/>
+        </form>
+
+
+
         <table class="table-comments">
 <!--        ADD COMMENT -->
             <form th:action="@{/addcomment}" method="post" th:object="${commentToInsert}">
@@ -64,14 +79,14 @@
             <tr>
                 <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
                     <td class="comment-d">
-                        <div id="messageId" class="comment" th:classid="${comment.id}" th:text="${comment.text}"></div>
+                        <div th:id="'messageId' + ${comment.id}" th:class="'comment'+ ${comment.id}" th:text="${comment.text}"></div>
                     </td>
                     <td>
                         <div>
-                            <input id="editId" type="button" value="Edit comment" class="btn btn-warning btn-sm" onclick="updateButton()"/>
-                            <input id="saveId" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" onclick="updateButton()"/>
+                            <input th:id="'editId' + ${comment.id}" type="button" value="Edit comment" class="btn btn-warning btn-sm" th:onclick="'javascript:updateButton(' + ${comment.id} + ');'"/>
+                            <input th:id="'saveId' + ${comment.id}" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" th:onclick="'javascript:updateButton(' + ${comment.id} + ');'"/>
                         </div>
-                            <input id="newMessageId" type="hidden" name="text"/>
+                            <input th:id="'newMessageId' + ${comment.id}" type="hidden" name="text"/>
                             <input type="hidden" name="id" th:value="${comment.id}"/>
                     </td>
                 </form>
@@ -95,29 +110,54 @@
     <!-- end of POST LIST -->
 <script type="text/javascript">
 
-    function updateButton() {
-        const editButton = document.getElementById('editId');
-        const saveButton = document.getElementById('saveId');
+
+    function updateButton(idComment) {
+        const editButton = document.getElementById('editId' + idComment);
+        const saveButton = document.getElementById('saveId' + idComment);
 
         if (editButton.hidden === false) {
             saveButton.hidden = false;
             editButton.hidden = true;
-            const division = document.querySelector('.comment');
+            const division = document.querySelector('.comment' + idComment);
             division.contentEditable = 'true'
         } else {
             saveButton.hidden = true;
             editButton.hidden = false;
-            const division = document.querySelector('.comment');
-            myFunction();
+            const division = document.querySelector('.comment' + idComment);
+            myFunction(idComment);
             division.contentEditable = 'false'
         }
 
-        function myFunction() {
-            var x = document.getElementById("messageId").innerHTML;
-            document.getElementById("newMessageId").value = x;
+
+
+        function myFunction(idComment) {
+            var x = document.getElementById("messageId" + idComment).innerHTML;
+            document.getElementById("newMessageId" + idComment).value = x;
         }
     }
 
+    function updateButtonPost(idPost) {
+        const editButton = document.getElementById('editPId' + idPost);
+        const saveButton = document.getElementById('savePId' + idPost);
+
+        if (editButton.hidden === false) {
+            saveButton.hidden = false;
+            editButton.hidden = true;
+            const division = document.querySelector('.post' + idPost);
+            division.contentEditable = 'true'
+        } else {
+            saveButton.hidden = true;
+            editButton.hidden = false;
+            const division = document.querySelector('.post' + idPost);
+            myFunctionPost(idPost);
+            division.contentEditable = 'false'
+        }
+
+        function myFunctionPost(idPost) {
+            var x = document.getElementById("messagePId" + idPost).innerHTML;
+            document.getElementById("newMessagePId" + idPost).value = x;
+        }
+    }
 
 </script>
 </body>

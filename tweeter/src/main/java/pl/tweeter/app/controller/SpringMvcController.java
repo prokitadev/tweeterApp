@@ -12,9 +12,5 @@ import java.security.Principal;
 @Controller
 public class SpringMvcController {
 
-    @RequestMapping(value = "/username", method = RequestMethod.GET)
-    @ResponseBody
-    public String currentUserName(Principal principal) {
-        return principal.getName();
-    }
+
 }

@@ -29,13 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and().formLogin()
-                .loginProcessingUrl("/login")
+                .loginPage("/login")
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .loginProcessingUrl("/login-process")
                 .failureUrl("/login?error")
                 .defaultSuccessUrl("/index")
-                .and().logout().logoutSuccessUrl("/index");
+                .and().logout().logoutSuccessUrl("/login");
     }
 
     @Override

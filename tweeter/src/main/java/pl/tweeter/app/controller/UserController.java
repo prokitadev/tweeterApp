@@ -29,6 +29,13 @@ public class UserController {
         return "users";
     }
 
+//    @GetMapping("/username")
+//    public String getUserName(Model model) {
+//        User user = userService.loggedUser();
+//        model.addAttribute("getUserName", user.getUserDescription().getName());
+//        return "index";
+//    }
+
     @PostMapping("/banuser")
     public String banUser(@ModelAttribute("login") @Valid UserDto userDto, Long days) {
         userService.banUser(userDto, days);
