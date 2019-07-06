@@ -28,7 +28,7 @@ public class IndexController {
 
 
     @RequestMapping(value = {"/", "/index"})
-    public String getPost(Model model) {
+    public String get(Model model) {
         List<PostDto> postList = postService.getAllPosts();
         model.addAttribute("posts", postList);
         model.addAttribute("postToInsert", new PostDto());
@@ -37,8 +37,8 @@ public class IndexController {
         model.addAttribute("commentToInsert", new PostDto());
 
         User user = userService.loggedUser();
+        model.addAttribute("getUser", user);
 
-        model.addAttribute("getUserName", user);
         return "index";
     }
 

@@ -27,9 +27,6 @@ public class UserDescription {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private User user;
 
     public Integer getId() {
         return id;

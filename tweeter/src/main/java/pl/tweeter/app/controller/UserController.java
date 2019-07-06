@@ -7,11 +7,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import pl.tweeter.app.entity.User;
 import pl.tweeter.app.model.UserDto;
 import pl.tweeter.app.service.UserService;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -44,4 +46,14 @@ public class UserController {
     }
 
 
+    @GetMapping("/adduser")
+    public ModelAndView addUser() {
+        return new ModelAndView("register", "userToInsert", new UserDto());
+    }
+
+    @PostMapping("/adduser")
+    public String addUser(@ModelAttribute @Valid UserDto userDto, BindingResult result) throws ParseException {
+        userService.addNewUser(userDto, result);
+        return "users";
+    }
 }

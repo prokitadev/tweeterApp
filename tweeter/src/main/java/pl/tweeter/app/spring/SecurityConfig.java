@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,13 +19,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/")
-                .hasAnyAuthority("admin", "user", "moderator", "observer")
+        http.authorizeRequests().antMatchers("/", "/index")
+                .hasAnyAuthority("ADMIN", "USER", "ROLE_MODERATOR", "ROLE_OBSERVER")
                 .antMatchers("/users")
-                .hasAnyAuthority("admin")
+                .hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll()
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
@@ -43,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .usersByUsernameQuery("SELECT u.login, u.password, 1 FROM t_users u where u.login=?")
                 .authoritiesByUsernameQuery("SELECT u.login, u.role, 1 FROM t_users u where u.login=?")
-                .dataSource(jdbcTemplate.getDataSource());
+                .dataSource(jdbcTemplate.getDataSource())
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 }

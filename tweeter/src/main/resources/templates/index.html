@@ -9,13 +9,29 @@
           th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
 </head>
+  <header th:insert="fragment/header.html :: header"> </header>
 <body>
 <div class="main">
 
     <div class="jumbotron jumbotron-fluid">
+
+    <div class="row headers">
+        <div class="col-10">
+            <span th:text="${getUser.userDescription.name} + ' ' + ${getUser.userDescription.surname}"></span>
+        </div>
+        <div class="col-1">
+            <span th:if="${getUser.role == 'ADMIN'}"><a href="/users"> USERS </a> </span>
+        </div>
+        <div class="col-1">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+
+
         <div class="container">
             <h1 class="display-4">Tweeter</h1>
-            <p class="lead"><span th:text="${getUserName.userDescription.name}"></span>, what you want to say?</p>
+            <p class="lead"><span th:text="${getUser.userDescription.name}"></span>, what you want to say?</p>
 
 
             <!--            <p th:text="${loggeduser.login}"></p>-->
@@ -24,12 +40,12 @@
             <!-- ADD NEW POST PART -->
 
             <form th:action="@{/addpost}" method="post" th:object="${postToInsert}">
-                <p> Add new post:
+                <p> Write here:
                     <input class="form-control" type="text" th:field="*{text}"/>
                 </p>
                 <p>
-                    <input type="submit" value="Submit"/>
-                    <input type="reset" value="Reset"/>
+                    <input type="submit" class="btn btn-success" value="Add new post"/>
+                    <input type="reset" class="btn btn-light" value="Reset"/>
                 </p>
             </form>
 
@@ -40,21 +56,34 @@
     <!-- POST LIST -->
 
 
-    <div th:each="post : ${posts}" th:if="${post.parentId == null}">
+    <div  th:each="post : ${posts}" th:if="${post.parentId == null}">
 
-
-        <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
-
-        <div th:id="'messagePId' + ${post.id}" th:class="'post' + ${post.id}" th:text="${post.text}"></div>
-        <div class="date" th:text="${post.createTimestamp}"></div>
-            <div>
-                <input th:id="'editPId' + ${post.id}" type="button" value="Edit post" class="btn btn-warning btn-sm" th:onclick="'javascript:updateButtonPost(' + ${post.id} + ');'"/>
-                <input th:id="'savePId' + ${post.id}" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" th:onclick="'javascript:updateButtonPost(' + ${post.id} + ');'"/>
+        <div class="container">
+            <div class="row post-row">
+                <div class="col-10">
+                        <div th:id="'messagePId' + ${post.id}" th:class="'post post' + ${post.id}" th:text="${post.text}"></div>
+                </div>
+                <div class="col-1">
+                    <div th:if="${getUser.id == post.getUserId()}">
+                        <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
+                                <input th:id="'editPId' + ${post.id}" type="button" value="Edit post" class="btn btn-edit btn-sm btn-post" th:onclick="'javascript:updateButtonPost(' + ${post.id} + ');'"/>
+                                <input th:id="'savePId' + ${post.id}" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" th:onclick="'javascript:updateButtonPost(' + ${post.id} + ');'"/>
+                            <input th:id="'newMessagePId' + ${post.id}" type="hidden" name="text"/>
+                            <input type="hidden" name="id" th:value="${post.id}"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div th:if="${getUser.id == post.getUserId()} or ${getUser.getRole() == 'ADMIN'}">
+                        <form th:action="@{/deletepost}" method="post" th:object="${postToDelete}">
+                                <input id="deletePId" type="submit" value="Delete" class="btn btn-delete btn-sm"/>
+                                <input type="hidden" name="id" th:value="${post.id}"/>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <input th:id="'newMessagePId' + ${post.id}" type="hidden" name="text"/>
-            <input type="hidden" name="id" th:value="${post.id}"/>
-        </form>
-
+        </div>
+        <div class="date" th:text="${post.createTimestamp}"></div>
 
 
         <table class="table-comments">
@@ -67,7 +96,7 @@
                     </p>
                     <p>
                         <td>
-                            <input type="submit" value="Comment" class="btn btn-success btn-sm"/>
+                            <input type="submit" value="Comment" class="btn btn-comment btn-sm"/>
                             <input type="hidden" name="parentId" th:value="${post.id}"/>
                         </td>
 
@@ -79,11 +108,11 @@
             <tr>
                 <form th:action="@{/modifypost}" method="post" th:object="${postToModify}">
                     <td class="comment-d">
-                        <div th:id="'messageId' + ${comment.id}" th:class="'comment'+ ${comment.id}" th:text="${comment.text}"></div>
+                        <div th:id="'messageId' + ${comment.id}" th:class="'comment comment'+ ${comment.id}" th:text="${comment.text}"></div>
                     </td>
                     <td>
                         <div>
-                            <input th:id="'editId' + ${comment.id}" type="button" value="Edit comment" class="btn btn-warning btn-sm" th:onclick="'javascript:updateButton(' + ${comment.id} + ');'"/>
+                            <input th:id="'editId' + ${comment.id}" type="button" value="Edit comment" class="btn btn-edit btn-sm" th:onclick="'javascript:updateButton(' + ${comment.id} + ');'"/>
                             <input th:id="'saveId' + ${comment.id}" hidden="true" type="submit" value="Save" class="btn btn-success btn-sm" th:onclick="'javascript:updateButton(' + ${comment.id} + ');'"/>
                         </div>
                             <input th:id="'newMessageId' + ${comment.id}" type="hidden" name="text"/>
@@ -93,13 +122,15 @@
 
                 <form th:action="@{/deletepost}" method="post" th:object="${postToDelete}">
                     <td>
-                        <input id="deleteId" type="submit" value="Delete" class="btn btn-danger btn-sm"/>
+                        <input id="deleteId" type="submit" value="Delete" class="btn btn-delete btn-sm"/>
                         <input type="hidden" name="id" th:value="${comment.id}"/>
                     </td>
                 </form>
             </tr>
+
         </div>
         </table>
+        <hr/>
     </div>
 </div>
 

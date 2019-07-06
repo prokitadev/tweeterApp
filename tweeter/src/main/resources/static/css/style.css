@@ -3,16 +3,30 @@
     margin: auto;
 }
 
+.post-row {
+    background-color: #f6f6f6;
+    border-radius: .25rem;
+    padding-top: .3rem;
+    padding-bottom: 1.1rem;
+}
+
 .post {
-    font-family: sans-serif, "Montserrat";
-    font-size: 18pt;
-    padding-top: 12pt;
+    height: auto;
+    font-size: 1.9rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #495057;
+    background-clip: padding-box;
 }
 
 .date {
-    font-family: sans-serif, "Montserrat";
-    font-size: 8pt;
-    padding-top: 8pt;
+    height: calc(0.6em + .6rem + 2px);
+    font-size: .9rem;
+    font-weight: 300;
+    line-height: 1.3;
+    color: #495057;
+    background-clip: padding-box;
+    border-radius: .25rem;
 }
 
 .comment {
@@ -22,7 +36,7 @@
     font-weight: 300;
     line-height: 1.3;
     color: #495057;
-    background-color: #e9ecef;
+    background-color: #f6f6f6;
     background-clip: padding-box;
     border-radius: .25rem;
 }
@@ -51,3 +65,35 @@
     align-items: initial;
 
 }
+
+.btn-comment {
+    color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #28a745 !important;
+}
+
+.btn-edit {
+    color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #ffc107 !important;
+}
+
+.btn-delete {
+    color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #dc3545 !important;
+}
+
+.headers {
+    background-color: #f6f6f6 !important;
+    padding-bottom: 2rem;
+    margin: 0 !important;
+
+}
+.jumbotron{
+    padding-top: 1rem !important;
+}
+.jumbotron-fluid {
+    background-color: #f6f6f6 !important;
+}
+

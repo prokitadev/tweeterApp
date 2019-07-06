@@ -35,7 +35,7 @@ public class PostService {
 
     }
 
-    public void editPost(PostDto postDto) {
+    public void editPost(PostDto postDto) { //dodac moze try catch, ktory wywali blad jezeli userid edytujacego nie jest rowne useris tworcy
         Post postTemp = postRepository.getOne(postDto.getId());
         postTemp.setModifyTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         postTemp.setText(postDto.getText());

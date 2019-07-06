@@ -23,7 +23,7 @@ public class UserDto {
 
     @Size(min=2, max=20, message = "password length should be between 2 and 20 chars")
     private String password;
-    private String role;
+    private RoleTypes role;
     private UserDescription userDescription;
 
     public UserDescription getUserDescription() {
@@ -68,11 +68,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getRole() {
+    public RoleTypes getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(RoleTypes role) {
         this.role = role;
     }
 }

@@ -1,0 +1,31 @@
+<!Doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Tweeter</title>
+    <link type="text/css" rel="stylesheet"
+          href="../static/css/style.css"
+          th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+</head>
+<body>
+Register
+<form class="sign" th:action="@{/adduser}" method="post" th:object="${userToInsert}">
+    <p>Name: <input type="text" th:field="*{login}"/></p>
+    <p>Password: <input type="password" th:field="*{password}" /> </p>
+<!--    <select th:field="*{role}">-->
+<!--        <option th:each="role : ${T(pl.tweeter.app.model.RoleTypes).values()}"-->
+<!--                th:value="${role}"-->
+<!--                th:text="${role}">-->
+
+<!--        </option>-->
+<!--    </select>-->
+    <p>
+        <input type="submit" value="Submit"/>
+        <input type="reset" value="Reset"/>
+    </p>
+
+</form>
+</body>
+</html>
